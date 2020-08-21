@@ -5,7 +5,6 @@
 ##
 ## package_data_RTP:
 ## type: data
-## contributors: Xeane, Drew, Behr, pjo
 ## package_name: RTP
 ## server_configs:
 ##   yaml_id: path/to/file.yml

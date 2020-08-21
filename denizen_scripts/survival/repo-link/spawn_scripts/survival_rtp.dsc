@@ -1,13 +1,16 @@
+package_data_RTP:
+  type: data
+  package_name: RTP
+  server_configs:
+    rtp_data: rtp/rtp_config.yml
+
 survival_rtp:
   type: task
   debug: false
-  minimum: 25000
-  maximum: 34000
-  world: mainland
   script:
-    - define min <script.data_key[minimum]>
-    - define max <script.data_key[maximum]>
-    - define world <script.data_key[world]>
+    - define min <yaml[rtp_data].read[minimum]>
+    - define max <yaml[rtp_data].read[maximum]>
+    - define world <yaml[rtp_data].read[world]>
     - define x <util.random.int[<[min]>].to[<[max]>].mul[<list[1|-1].random>]>
     - define z <util.random.int[<[min]>].to[<[max]>].mul[<list[1|-1].random>]>
     - chunkload <location[<[x]>,200,<[z]>,<[world]>].chunk> duration:10s
@@ -15,8 +18,7 @@ survival_rtp:
     - narrate "<&a>You have 1 minute of no fall damage."
     - teleport <location[<[x]>,300,<[z]>,<[world]>]>
     - flag player no_fall:true duration:1m
-    - if !<yaml[global.player.<player.uuid>].contains[titles.unlocked.explorer]>:
-  #^- if !<yaml[global.player.<player.uuid>].read[titles.unlocked].contains[Explorer]||false>:
+    - if !<yaml[global.player.<player.uuid>].read[titles.unlocked].contains[explorer]||false>:
       - define id First_RTP
       - inject Achievement_give
     - wait 1m
