@@ -3,6 +3,10 @@ command_arg_registry:
     debug: false
     definitions: message
     script:
+        - if <[message].type> == DiscordMessage:
+            - define message_object <[message]>
+            - define message <[message].message>
+
         # % ██ [ Equivalent of <context.command> | Returns the command name as an ElementTag. ] ██
         - define command "<[message].before[ ]>"
 
@@ -13,8 +17,9 @@ command_arg_registry:
             - define args <[message].split_args.remove[first]>
 
         # % ██ [ Equivalent of <context.raw_args> | Returns any args used as an ElementTag.   ] ██
-
+        - if !<[args].is_empty>:
             - define raw_args "<[message].after[ ]>"
+            
         # % ██ [ Unique return - <[args].first>   | Returns the first argument.               ] ██
             - define first_arg <[args].first>
 
